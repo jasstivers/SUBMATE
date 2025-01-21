@@ -4,6 +4,6 @@ class SubmarinesController < ApplicationController
   end
 
   def show
-    @submarine = Submarine.find(params[:id])
+    @Submarine = Submarine.find(params[:id])
   end
 end
