@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :submarines, only: [:index]
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :submarines
 end
