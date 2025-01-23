@@ -1,1 +1,88 @@
-<h1>Available Submarines</h1>
+<div class="submarines-container">
+  <!-- Left-side filter box -->
+  <aside class="filter-box">
+    <h3>Filter Submarines</h3>
+
+    <div class="filter-group">
+      <label for="sort-by">Sort By</label>
+      <select id="sort-by" name="sort_by">
+        <option value="price">Price</option>
+        <option value="price">Price (Ascending)</option>
+        <option value="price">Price (Descending)</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <h4>Product Search</h4>
+      <input type="text" placeholder="Search submarines" name="search" id="search">
+    </div>
+
+    <div class="filter-group">
+      <h4>Price</h4>
+      <input type="range" min="400000" max="6500000" step="10000" id="price-range">
+      <div class="price-values">
+        <span>USD $400,000</span> - <span>USD $6,500,000</span>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h4>Categories</h4>
+      <ul>
+        <li><label><input type="checkbox" name="category" value="tourist"> Tourist Submarines (7)</label></li>
+        <li><label><input type="checkbox" name="category" value="military"> Military Submarines (1)</label></li>
+
+      </ul>
+    </div>
+
+    <div class="filter-group">
+      <h4>Operating Depth</h4>
+      <ul>
+        <li><label><input type="checkbox" name="depth" value="100m"> 100m (4)</label></li>
+        <li><label><input type="checkbox" name="depth" value="30m"> 30m (1)</label></li>
+      </ul>
+    </div>
+
+    <div class="filter-group">
+      <h4>Occupancy</h4>
+      <ul>
+        <li><label><input type="checkbox" name="occupancy" value="10"> 10 Person (1)</label></li>
+        <li><label><input type="checkbox" name="occupancy" value="16"> 16 Person (1)</label></li>
+      </ul>
+    </div>
+
+    <div class="filter-group">
+      <h4>Cruising Speed</h4>
+      <ul>
+        <li><label><input type="checkbox" name="speed" value="3"> 3 Knots (7)</label></li>
+      </ul>
+    </div>
+
+    <div class="filter-group">
+      <h4>Autonomy</h4>
+      <ul>
+        <li><label><input type="checkbox" name="autonomy" value="10h"> 10 Hours (2)</label></li>
+        <li><label><input type="checkbox" name="autonomy" value="7d"> 7 Days (1)</label></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Right-side submarine list -->
+  <div class="submarine-list">
+    <h1 class="page-title">Explore Our Submarines</h1>
+    <p class="page-description">Discover our fleet of submarines designed for exploration and adventure.</p>
+
+    <% @submarines.each do |submarine| %>
+      <div class="submarine-card">
+        <div class="submarine-image">
+          <!-- Image will go here -->
+        </div>
+        <div class="submarine-details">
+          <h2 class="submarine-title"><!-- Submarine name will go here later --></h2>
+          <p class="submarine-description"><!-- Submarine description will go here later --></p>
+          <p class="submarine-capacity"><!-- Submarine capacity will go here later --></p>
+          <a href="#" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

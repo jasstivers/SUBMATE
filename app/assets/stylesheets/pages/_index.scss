@@ -1,2 +1,175 @@
 // Import page-specific CSS files here.
 @import "home";
+
+.submarines-container {
+  display: flex;
+  text-align: center;
+  margin: 2rem;
+
+  .page-title {
+    font-size: 2.5rem;
+    color: #003366;
+    margin-bottom: 1rem;
+  }
+
+  .page-description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .page-content {
+    display: flex; // Use flexbox for side-by-side layout
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .filter-box {
+    margin-top: 157px;
+    flex: 1; // Sidebar width
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    max-width: 300px;
+
+    h3 {
+      font-size: 1.5rem;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+
+    .filter-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      input[type="text"],
+      input[type="range"] {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+      }
+
+      .price-values {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .checkbox {
+        display: flex;
+        align-items: center;
+        margin-top: 0.5rem;
+
+        input {
+          margin-right: 0.5rem;
+        }
+
+        label {
+          font-size: 0.9rem;
+          color: #666;
+        }
+      }
+    }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem;
+      background-color: #003366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0055b3;
+      }
+    }
+  }
+
+  .submarine-list {
+    width: 100%;
+    display: block;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .submarine-card {
+    margin-left: 20px;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .submarine-image {
+      height: 200px;
+      background-color: #f4f4f4;
+    }
+
+    .submarine-details {
+      padding: 1rem;
+
+      .submarine-title {
+        font-size: 1.5rem;
+        color: #003366;
+        margin-bottom: 0.5rem;
+      }
+
+      .submarine-description {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .submarine-capacity {
+        font-size: 0.9rem;
+        color: #999;
+        margin-bottom: 1rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        color: #fff;
+        background: #003366;
+        text-decoration: none;
+        border-radius: 4px;
+
+        &:hover {
+          background: #0055b3;
+        }
+      }
+    }
+  }
+}
