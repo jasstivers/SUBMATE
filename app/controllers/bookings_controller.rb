@@ -1,6 +1,9 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @bookings = Booking.includes(:user, :submarine)
+  
   def new
     @submarine = Submarine.find(params[:submarine_id])
     @booking = Booking.new
