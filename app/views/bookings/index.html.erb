@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row d-flex">
+    <!-- Sidebar -->
+    <div class="col-md-3" style="background-color: #d6d8f0; flex: 0 1 auto;">
+      <div class="p-4">
+        <div class="circle bg-secondary mb-4" style="width: 100px; height: 100px; border-radius: 50%;"></div>
+      </div>
+    </div>
+
+    <!-- Booking Cards -->
+    <div class="col-md-9 p-4" style="flex: 1 1 auto;">
+      <div class="d-flex flex-column gap-3">
+        <% @bookings.each do |booking| %>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Submarine Picture">
+              <h3 class="card-title mb-1">
+                <%= booking.submarine.name %>
+              </h3>
+              <p class="card-text text-muted mb-0">
+                <strong>Status:</strong> <%= booking.status %>
+              </p>
+              <p class="card-text text-muted mb-0">
+                <strong>start_datetime:</strong> <%= booking.start_datetime %>
+              </p>
+              <p class="card-text text-muted mb-0">
+                <strong>end_date:</strong> <%= booking.end_date %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+        <!-- Back Link -->
+        <div class="mt-4">
+          <%= link_to "Back to Home", root_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
