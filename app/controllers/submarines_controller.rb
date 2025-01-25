@@ -2,17 +2,12 @@ class SubmarinesController < ApplicationController
   def index
     @submarines = Submarine.all
 
-    if params[:price_ranges].present?
-      price_ranges = params[:price_ranges]
-      if price_ranges.include?('under_1m')
-        @submarines = @submarines.where('price < ?', 1_000_000)
-      end
-      if price_ranges.include?('1m_to_10m')
-        @submarines = @submarines.where(price: 1_000_000..10_000_000)
-      end
-      if price_ranges.include?('above_10m')
-        @submarines = @submarines.where('price > ?', 10_000_000)
-      end
+    # Filter by Price Range
+    if params[:price_slider_min].present? && params[:price_slider_max].present?
+      min_price = params[:price_slider_min].to_i
+      max_price = params[:price_slider_max].to_i
+
+      @submarines = @submarines.where('price >= ? AND price <= ?', min_price, max_price)
     end
 
     if params[:categories].present?
@@ -20,7 +15,14 @@ class SubmarinesController < ApplicationController
     end
 
     if params[:autonomies].present?
-      @submarines = @submarines.where(amenities: params[:autonomies])
+      selected_amenities = params[:autonomies]
+      selected_amenities.each do |amenity|
+        @submarines = @submarines.where('amenities ILIKE ?', "%#{amenity}%")
+      end
+    end
+
+    if params[:production_years].present?
+      @submarines = @submarines.where(prod_year: params[:production_years])
     end
 
     if params[:search].present?
@@ -39,11 +41,11 @@ class SubmarinesController < ApplicationController
     end
 
     if params[:depth].present?
-      @submarines = @submarines.where('amenities ILIKE ?', "%#{params[:depth]}%")
+      @submarines = @submarines.where('depth = ?', params[:depth])
     end
   end
 
-    def show
+  def show
     @submarine = Submarine.find(params[:id])
   end
 end
