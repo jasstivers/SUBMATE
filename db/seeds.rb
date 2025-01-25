@@ -27,6 +27,7 @@ submarines = [
     amenities: "Wifi, Mini-bar, Observation Deck",
     speed: 30,
     price: 5000000,
+    image_tag: "nautilus",
     user_id: User.first.id # Assign user_id from the first user
   },
   {
@@ -38,6 +39,7 @@ submarines = [
     amenities: "Laboratory, Sonar, Storage",
     speed: 25,
     price: 8000000,
+    image_tag: "deep_blue",
     user_id: User.second.id # Assign user_id from the second user
   },
   {
@@ -49,6 +51,7 @@ submarines = [
     amenities: "Autopilot, GPS, Reclining Seats",
     speed: 40,
     price: 3000000,
+    image_tag: "fish_sub",
     user_id: User.third.id # Assign user_id from the third user
   },
   {
@@ -60,6 +63,7 @@ submarines = [
     amenities: "Radar, Torpedoes, Stealth Mode",
     speed: 45,
     price: 10000000,
+    image_tag: "titan_sub",
     user_id: User.last.id # Assign user_id from the last user
   }
 ]
