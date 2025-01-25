@@ -51,7 +51,7 @@ submarines = [
     amenities: "Autopilot, GPS, Reclining Seats",
     speed: 40,
     price: 3000000,
-    image_tag: "fish_sub",
+    image_tag: "poseidon",
     user_id: User.third.id # Assign user_id from the third user
   },
   {
@@ -64,6 +64,66 @@ submarines = [
     speed: 45,
     price: 10000000,
     image_tag: "titan_sub",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "Sea Thunder II",
+    description: "Sea Thunder is back with a vengeance! This time will be different!",
+    weight_ton: 4000,
+    submarine_class: "Destroyer",
+    prod_year: 2025,
+    amenities: "Radar, Torpedoes, Torpedoes, Torpedoes,...",
+    speed: 10,
+    price: 900000000,
+    image_tag: "sea_thunder_2",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "Seawolf",
+    description: "If a wolf howls underwater, can your enemies hear it?",
+    weight_ton: 2500,
+    submarine_class: "Interceptor",
+    prod_year: 2005,
+    amenities: "Radar, Torpedoes, Stealth Mode",
+    speed: 60,
+    price: 1500000,
+    image_tag: "scifi_sub",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "The Dolphin",
+    description: "The perfect sub for recreational porpoises!",
+    weight_ton: 3000,
+    submarine_class: "Interceptor",
+    prod_year: 2022,
+    amenities: "Radar, Torpedoes, Stealth Mode",
+    speed: 45,
+    price: 10000000,
+    image_tag: "fish_sub",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "Explorer IV",
+    description: "Diving deep into the dark wet abyss in the name of science.",
+    weight_ton: 3000,
+    submarine_class: "Interceptor",
+    prod_year: 2022,
+    amenities: "Radar, Torpedoes, Stealth Mode",
+    speed: 45,
+    price: 10000000,
+    image_tag: "explorer_4",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "Qianliyan III",
+    description: "The pride of China!",
+    weight_ton: 3000,
+    submarine_class: "Interceptor",
+    prod_year: 2022,
+    amenities: "Radar, Torpedoes, Stealth Mode",
+    speed: 45,
+    price: 10000000,
+    image_tag: "Qianliyan_3",
     user_id: User.last.id # Assign user_id from the last user
   }
 ]
