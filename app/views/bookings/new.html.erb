@@ -1,0 +1,17 @@
+<h1>Book Submarine: <%= @submarine.name %></h1>
+
+<%= form_with model: [@submarine, @booking], local: true do |form| %>
+  <div>
+    <%= form.label :start_datetime %>
+    <%= form.datetime_select :start_datetime %>
+  </div>
+
+  <div>
+    <%= form.label :end_datetime %>
+    <%= form.datetime_select :end_datetime %>
+  </div>
+
+  <div>
+    <%= form.submit "Book Submarine" %>
+  </div>
+<% end %>
