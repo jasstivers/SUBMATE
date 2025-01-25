@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <h1>Book Submarine: <%= @submarine.name %></h1>
+
+  <%= form_with(model: [@submarine, @booking], url: submarine_bookings_path(@submarine), local: true) do |form| %>
+    <!-- Name -->
+    <div class="mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+
+    <!-- Address -->
+    <div class="mb-3">
+      <%= form.label :address, class: 'form-label' %>
+      <%= form.text_area :address, class: 'form-control' %>
+    </div>
+
+    <!-- Email Address -->
+    <div class="mb-3">
+      <%= form.label :email, class: 'form-label' %>
+      <%= form.email_field :email, class: 'form-control' %>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="mb-3">
+      <%= form.label :payment_method, class: 'form-label' %>
+      <%= form.select :payment_method, ['Credit Card', 'PayPal', 'Bank Transfer'], {}, class: 'form-select' %>
+    </div>
+
+    <!-- Birthdate -->
+    <div class="mb-3">
+      <%= form.label :birthdate, class: 'form-label' %>
+      <%= form.date_select :birthdate, class: 'form-control' %>
+    </div>
+
+    <!-- Book From and Book Until -->
+    <div class="mb-3">
+      <%= form.label :start_datetime, "Book From", class: 'form-label' %>
+      <%= form.datetime_select :start_datetime, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :end_datetime, "Book Until", class: 'form-label' %>
+      <%= form.datetime_select :end_datetime, class: 'form-control' %>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+      <%= form.submit "Book Submarine", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
