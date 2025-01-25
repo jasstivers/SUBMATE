@@ -8,11 +8,10 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Submarines routes with nested bookings
   resources :submarines, only: [:index, :show] do
-    resources :bookings, only: [:new, :create]  # Nested bookings resource
+    resources :bookings, only: [:new, :create, :index], path: "bookings"  # Nested bookings with index action
   end
-
-  resources :bookings, only: [:index]  # The index for bookings without nesting
 
   # Defines the root path route ("/")
   # root "posts#index"

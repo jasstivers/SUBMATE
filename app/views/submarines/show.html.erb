@@ -7,20 +7,16 @@
 
     <!-- Top-right area: Booking Form -->
     <div class="col-md-6">
-      <div class="card shadow">
-        <div class="card-body">
-          <h4>Booking Form</h4>
-          <form action="#" method="post">
-            <div class="form-group">
-              <label for="bookingDate">Booking Date</label>
-              <input type="date" class="form-control" id="bookingDate" name="date">
-            </div>
-            <div class="form-group mt-2">
-              <button type="submit" class="btn btn-primary">Book Now</button>
-            </div>
-          </form>
+      <h4>Booking Form</h4>
+      <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
+        <div class="form-group">
+          <label for="bookingDate">Booking Date</label>
+          <input type="date" class="form-control" id="bookingDate" name="date">
         </div>
-      </div>
+        <div class="form-group mt-2">
+          <button type="submit" class="btn btn-primary">Book Now</button>
+        </div>
+      <% end %>
     </div>
   </div>
 
