@@ -3,7 +3,7 @@ class BookingsController < ApplicationController
 
   def index
     @bookings = Booking.includes(:user, :submarine)
-  
+  end
   def new
     @submarine = Submarine.find(params[:submarine_id])
     @booking = Booking.new
