@@ -3,86 +3,87 @@
   <aside class="filter-box">
     <h3>Filter Submarines</h3>
 
-    <div class="filter-group">
-      <label for="sort-by">Sort By</label>
-      <select id="sort-by" name="sort_by">
-        <option value="price">Price</option>
-        <option value="price">Price (Ascending)</option>
-        <option value="price">Price (Descending)</option>
-      </select>
-    </div>
-
-    <div class="filter-group">
-      <h4>Product Search</h4>
-      <input type="text" placeholder="Search submarines" name="search" id="search">
-    </div>
-
-    <div class="filter-group">
-      <h4>Price</h4>
-      <input type="range" min="400000" max="6500000" step="10000" id="price-range">
-      <div class="price-values">
-        <span>USD $400,000</span> - <span>USD $6,500,000</span>
+    <%= form_with url: submarines_path, method: :get, local: true do %>
+      <div class="filter-group">
+        <label for="sort-by">Sort By</label>
+        <%= select_tag :sort_by, options_for_select([['Price', 'price'], ['Price (Ascending)', 'price_asc'], ['Price (Descending)', 'price_desc']]), id: "sort-by" %>
       </div>
-    </div>
 
-    <div class="filter-group">
-      <h4>Categories</h4>
-      <ul>
-        <li><label><input type="checkbox" name="category" value="tourist"> Tourist Submarines (7)</label></li>
-        <li><label><input type="checkbox" name="category" value="military"> Military Submarines (1)</label></li>
+      <div class="filter-group">
+        <h4>Product Search</h4>
+        <%= text_field_tag :search, params[:search], placeholder: "Search submarines", id: "search" %>
+      </div>
 
-      </ul>
-    </div>
+      <div class="filter-group">
+        <h4>Price</h4>
+        <%= range_field_tag :price_range, params[:price_range], min: 400000, max: 6500000, step: 10000, id: "price-range" %>
+        <div class="price-values">
+          <span>USD $400,000</span> - <span>USD $6,500,000</span>
+        </div>
+      </div>
 
-    <div class="filter-group">
-      <h4>Operating Depth</h4>
-      <ul>
-        <li><label><input type="checkbox" name="depth" value="100m"> 100m (4)</label></li>
-        <li><label><input type="checkbox" name="depth" value="30m"> 30m (1)</label></li>
-      </ul>
-    </div>
+      <div class="filter-group">
+        <h4>Categories</h4>
+        <ul>
+          <li><%= check_box_tag :category, 'tourist', params[:category] == 'tourist' %> Tourist Submarines (7)</li>
+          <li><%= check_box_tag :category, 'military', params[:category] == 'military' %> Military Submarines (1)</li>
+        </ul>
+      </div>
 
-    <div class="filter-group">
-      <h4>Occupancy</h4>
-      <ul>
-        <li><label><input type="checkbox" name="occupancy" value="10"> 10 Person (1)</label></li>
-        <li><label><input type="checkbox" name="occupancy" value="16"> 16 Person (1)</label></li>
-      </ul>
-    </div>
+      <div class="filter-group">
+        <h4>Operating Depth</h4>
+        <ul>
+          <li><%= check_box_tag :depth, '100m', params[:depth] == '100m' %> 100m (4)</li>
+          <li><%= check_box_tag :depth, '30m', params[:depth] == '30m' %> 30m (1)</li>
+        </ul>
+      </div>
 
-    <div class="filter-group">
-      <h4>Cruising Speed</h4>
-      <ul>
-        <li><label><input type="checkbox" name="speed" value="3"> 3 Knots (7)</label></li>
-      </ul>
-    </div>
+      <div class="filter-group">
+        <h4>Occupancy</h4>
+        <ul>
+          <li><%= check_box_tag :occupancy, '10', params[:occupancy] == '10' %> 10 Person (1)</li>
+          <li><%= check_box_tag :occupancy, '16', params[:occupancy] == '16' %> 16 Person (1)</li>
+        </ul>
+      </div>
 
-    <div class="filter-group">
-      <h4>Autonomy</h4>
-      <ul>
-        <li><label><input type="checkbox" name="autonomy" value="10h"> 10 Hours (2)</label></li>
-        <li><label><input type="checkbox" name="autonomy" value="7d"> 7 Days (1)</label></li>
-      </ul>
-    </div>
+      <div class="filter-group">
+        <h4>Cruising Speed</h4>
+        <ul>
+          <li><%= check_box_tag :speed, '3', params[:speed] == '3' %> 3 Knots (7)</li>
+        </ul>
+      </div>
+
+      <div class="filter-group">
+        <h4>Autonomy</h4>
+        <ul>
+          <li><%= check_box_tag :autonomy, '10h', params[:autonomy] == '10h' %> 10 Hours (2)</li>
+          <li><%= check_box_tag :autonomy, '7d', params[:autonomy] == '7d' %> 7 Days (1)</li>
+        </ul>
+      </div>
+
+      <%= submit_tag "Apply Filters", class: "btn-primary" %>
+    <% end %>
   </aside>
 
-  <!-- Right-side submarine list -->
-  <div class="submarine-list">
+  <!-- Right-side submarine info -->
+  <div class="submarine-info">
     <h1 class="page-title">Explore Our Submarines</h1>
     <p class="page-description">Discover our fleet of submarines designed for exploration and adventure.</p>
 
-    <% @submarines.each do |submarine| %>
-      <div class="submarine-card">
-        <div class="submarine-image">
-          <!-- Image will go here -->
+    <div class="submarines-cards">
+      <% @submarines.each do |submarine| %>
+        <div class="submarine-card">
+          <div class="submarine-image">
+            <!-- Image will go here -->
+          </div>
+          <div class="submarine-details">
+            <h2 class="submarine-title"><%= submarine.name %></h2>
+            <p class="submarine-description"><%= submarine.description %></p>
+            <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
+            <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
+          </div>
         </div>
-        <div class="submarine-details">
-          <h2 class="submarine-title"><!-- Submarine name will go here later --></h2>
-          <p class="submarine-description"><!-- Submarine description will go here later --></p>
-          <p class="submarine-capacity"><!-- Submarine capacity will go here later --></p>
-          <a href="#" class="btn btn-primary">View Details</a>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
