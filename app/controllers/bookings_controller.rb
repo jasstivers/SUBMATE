@@ -11,8 +11,10 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.submarine = @submarine
+    @booking.status = 'pending' # Set the booking status to pending
+
     if @booking.save
-      redirect_to submarine_path(@submarine), notice: "Booking successfully created!"
+      redirect_to submarine_path(@submarine), notice: "Booking is pending approval from the owner!"
     else
       render :new, status: :unprocessable_entity
     end
