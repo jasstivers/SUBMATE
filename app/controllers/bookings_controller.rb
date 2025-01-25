@@ -1,6 +1,13 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
 
+<<<<<<< Updated upstream
+=======
+  def index
+    @bookings = Booking.includes(:user, :submarine)
+  end
+
+>>>>>>> Stashed changes
   def new
     @submarine = Submarine.find(params[:submarine_id])
     @booking = Booking.new

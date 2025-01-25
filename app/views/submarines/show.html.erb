@@ -8,7 +8,7 @@
     <!-- Top-right area: Booking Form -->
     <div class="col-md-6">
       <h4>Booking Form</h4>
-      <form action="#" method="post">
+      <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
         <div class="form-group">
           <label for="bookingDate">Booking Date</label>
           <input type="date" class="form-control" id="bookingDate" name="date">
@@ -16,7 +16,7 @@
         <div class="form-group mt-2">
           <button type="submit" class="btn btn-primary">Book Now</button>
         </div>
-      </form>
+      <% end %>
     </div>
   </div>
 
