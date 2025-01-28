@@ -42,36 +42,6 @@
         </ul>
       </div>
 
-      <!-- Operating Depth -->
-      <div class="filter-group">
-        <h4>Operating Depth</h4>
-        <ul>
-          <li>
-            <%= check_box_tag "depths[]", "100m", params[:depths]&.include?("100m") %>
-            100m (4)
-          </li>
-          <li>
-            <%= check_box_tag "depths[]", "30m", params[:depths]&.include?("30m") %>
-            30m (1)
-          </li>
-        </ul>
-      </div>
-
-      <!-- Occupancy -->
-      <div class="filter-group">
-        <h4>Occupancy</h4>
-        <ul>
-          <li>
-            <%= check_box_tag "occupancies[]", "10", params[:occupancies]&.include?("10") %>
-            10 Person (1)
-          </li>
-          <li>
-            <%= check_box_tag "occupancies[]", "16", params[:occupancies]&.include?("16") %>
-            16 Person (1)
-          </li>
-        </ul>
-      </div>
-
       <!-- Production Year -->
       <div class="filter-group">
         <h4>Production Year</h4>

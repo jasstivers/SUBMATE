@@ -35,10 +35,6 @@ class SubmarinesController < ApplicationController
         @submarines = @submarines.order(price: :desc)
       end
     end
-
-    if params[:depth].present?
-      @submarines = @submarines.where('depth = ?', params[:depth])
-    end
   end
 
   def show
