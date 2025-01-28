@@ -2,12 +2,8 @@ class SubmarinesController < ApplicationController
   def index
     @submarines = Submarine.all
 
-    # Filter by Price Range
-    if params[:price_slider_min].present? && params[:price_slider_max].present?
-      min_price = params[:price_slider_min].to_i
-      max_price = params[:price_slider_max].to_i
-
-      @submarines = @submarines.where('price >= ? AND price <= ?', min_price, max_price)
+    if params[:price_range].present?
+      @submarines = @submarines.where('price <= ?', params[:price_range])
     end
 
     if params[:categories].present?

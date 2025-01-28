@@ -7,10 +7,10 @@
   <!-- Price Ranges -->
   <div class="filter-group">
     <h4>Price Ranges</h4>
-    <label for="price-slider">Select Price Range</label>
-    <input type="range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 0 %>" oninput="updatePriceValue(this)">
-    <span id="price-value">$<%= params[:price_range] || '0' %></span>
-    <%= hidden_field_tag :price_range, params[:price_range] || '0', id: 'price-range-hidden' %>
+    <label for="price-slider" class="form-label">Select Price Range</label>
+    <input type="range" class="form-range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 10000000 %>" oninput="updatePriceValue(this)">
+    <!-- Display the selected price value next to the slider -->
+    <span id="price-value">$<%= params[:price_range] || '10000000' %></span>
   </div>
 
 <script>
