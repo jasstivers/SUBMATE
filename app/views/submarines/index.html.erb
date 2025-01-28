@@ -3,37 +3,42 @@
   <aside class="filter-box">
     <h3>Filter Submarines</h3>
 
-<%= form_with url: submarines_path, method: :get, local: true do %>
-  <!-- Price Ranges -->
-  <div class="filter-group">
-    <h4>Price Ranges</h4>
-    <label for="price-slider" class="form-label">Select Price Range</label>
-    <input type="range" class="form-range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 10000000 %>" oninput="updatePriceValue(this)">
-    <!-- Display the selected price value next to the slider -->
-    <span id="price-value">$<%= params[:price_range] || '10000000' %></span>
-  </div>
+    <%= form_with url: submarines_path, method: :get, local: true do %>
+      <!-- Search by Name (Placed at the top) -->
+      <div class="filter-group">
+        <h4>Search by Name</h4>
+        <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter submarine name' %>
+      </div>
 
-<script>
-  function updatePriceValue(slider) {
-    const priceValue = document.getElementById('price-value');
-    priceValue.textContent = `$${slider.value}`;
+      <!-- Price Ranges -->
+      <div class="filter-group">
+        <h4>Price Ranges</h4>
+        <label for="price-slider" class="form-label">Select Price Range</label>
+        <input type="range" class="form-range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 10000000 %>" oninput="updatePriceValue(this)">
+        <!-- Display the selected price value next to the slider -->
+        <span id="price-value">$<%= params[:price_range] || '10000000' %></span>
+      </div>
 
-    const hiddenField = document.getElementById('price-range-hidden');
-    hiddenField.value = slider.value;
-  }
+      <script>
+        function updatePriceValue(slider) {
+          const priceValue = document.getElementById('price-value');
+          priceValue.textContent = `$${slider.value}`;
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const priceSlider = document.getElementById('price-slider');
-    updatePriceValue(priceSlider);  // Update price value on initial page load
-  });
-</script>
+          const hiddenField = document.getElementById('price-range-hidden');
+          hiddenField.value = slider.value;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const priceSlider = document.getElementById('price-slider');
+          updatePriceValue(priceSlider);  // Update price value on initial page load
+        });
+      </script>
 
       <!-- Categories -->
       <div class="filter-group">
         <h4>Categories</h4>
         <ul>
-          <% categories = ["Research", "Explorer", "Scout", "Interceptor"] %>
-          <% categories.each do |category| %>
+          <% @categories.each do |category| %>
             <li>
               <%= check_box_tag "categories[]", category, params[:categories]&.include?(category) %>
               <%= category %> (<%= Submarine.where(submarine_class: category).count %>)
@@ -83,22 +88,26 @@
     <p class="page-description">Discover our fleet of submarines designed for exploration and adventure.</p>
 
     <div class="submarines-cards">
-      <% @submarines.each do |submarine| %>
-        <div class="submarine-card">
-          <div class="submarine-image">
-          <% if submarine.image_tag.attached? %>
-            <%= cl_image_tag(submarine.image_tag.key, width: 300, height: 200, crop: :fill) %>
-          <% else %>
-            <%= image_tag "logo.png", width: 300, height: 200 %>
-          <% end %>
+      <% if @submarines.any? %>
+        <% @submarines.each do |submarine| %>
+          <div class="submarine-card">
+            <div class="submarine-image">
+              <% if submarine.image_tag.attached? %>
+                <%= cl_image_tag(submarine.image_tag.key, width: 300, height: 200, crop: :fill) %>
+              <% else %>
+                <%= image_tag "logo.png", width: 300, height: 200 %>
+              <% end %>
+            </div>
+            <div class="submarine-details">
+              <h2 class="submarine-title"><%= submarine.name %></h2>
+              <p class="submarine-description"><%= submarine.description %></p>
+              <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
+              <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
+            </div>
           </div>
-          <div class="submarine-details">
-            <h2 class="submarine-title"><%= submarine.name %></h2>
-            <p class="submarine-description"><%= submarine.description %></p>
-            <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
-            <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
-          </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p class="no-results-message">No submarines found matching your criteria.</p>
       <% end %>
     </div>
   </div>

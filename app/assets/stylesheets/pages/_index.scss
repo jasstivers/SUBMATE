@@ -6,6 +6,19 @@
   margin: 2rem;
   gap: 2rem;
 
+  .no-results-message {
+    color: #003366;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 1rem;
+    background-color: #e0f7fa;
+    padding: 8px 15px;
+    border: 1px solid #0077b6;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
   .filter-box {
     flex: 0 0 250px;
     max-width: 250px;
