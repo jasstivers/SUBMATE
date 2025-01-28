@@ -43,9 +43,9 @@
       <%= form.datetime_select :end_date, class: 'form-control' %>
     </div>
 
-    <!-- Book Submarine Button (Link) -->
+    <!-- Submit Button -->
     <div>
-      <%= link_to 'Book Submarine', submarine_bookings_path(@submarine), class: 'btn btn-primary' %>
+      <%= form.submit 'Book Submarine', class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>
