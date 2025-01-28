@@ -39,5 +39,24 @@ class SubmarinesController < ApplicationController
 
   def show
     @submarine = Submarine.find(params[:id])
-  end
+    end
+
+    def new
+      @submarine = Submarine.new
+    end
+
+    def create
+      @submarine = current_user.submarines.new(submarine_params)
+      if @submarine.save
+        redirect_to submarines_path
+      else
+        render :new
+      end
+    end
+
+    private
+
+    def submarine_params
+      params.require(:submarine).permit(:name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :image_tag)
+    end
 end
