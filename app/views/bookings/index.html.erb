@@ -29,6 +29,10 @@
                 <p class="card-text text-muted mb-0">
                   <strong>end_date:</strong> <%= booking.end_date %>
                 </p>
+                <% if booking.status == "pending" %>
+                  <%= link_to 'Confirm', confirm_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-success' %>
+                  <%= link_to 'Reject', reject_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-danger' %>
+                <% end %>
               </div>
             </div>
           <% end %>
