@@ -27,7 +27,7 @@ submarines = [
     amenities: "Wifi, Mini-bar, Observation Deck",
     speed: 30,
     price: 5000000,
-    image_tag: "nautilus",
+    image_tag: "sea_thunder_2",
     user_id: User.first.id # Assign user_id from the first user
   },
   {
@@ -129,7 +129,10 @@ submarines = [
 ]
 
 submarines.each do |submarine_data|
-  Submarine.create!(submarine_data)
+  submarine = Submarine.create!(submarine_data)
+  photo = File.new(Rails.root.join("db/Seed Images/#{submarine_data[:image_tag]}.jpg"))
+  submarine.photos.attach(io: photo, filename:"#{submarine_data[:image_tag]}.jpg", content_type: "image/jpg")
+  submarine.save
   puts "Created submarine: #{submarine_data[:name]}"  # Confirm submarine creation
 end
 

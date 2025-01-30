@@ -115,7 +115,7 @@
       <% @submarines.each do |submarine| %>
         <div class="submarine-card">
           <div class="submarine-image">
-          <%= cl_image_tag(submarine.image_tag, width: 300, height: 200, crop: :fill) %>
+          <%= cl_image_tag submarine.photos.first.key, width: 300, height: 200, crop: :fill %>
           </div>
           <div class="submarine-details">
             <h2 class="submarine-title"><%= submarine.name %></h2>
