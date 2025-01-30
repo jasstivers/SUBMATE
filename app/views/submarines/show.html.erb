@@ -7,17 +7,36 @@
 
     <!-- Top-right area: Booking Form -->
     <div class="col-md-6">
-      <h4>Booking Form</h4>
-      <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
-        <div class="form-group">
-          <label for="bookingDate">Booking Date</label>
-          <input type="date" class="form-control" id="bookingDate" name="date">
-        </div>
-        <div class="form-group mt-2">
-          <button type="submit" class="btn btn-primary">Book Now</button>
-        </div>
-      <% end %>
+  <h4>Booking Form</h4>
+  <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
+    <div class="form-group">
+      <label for="bookingStartDate">Start Date</label>
+      <input type="date" class="form-control" id="bookingStartDate" name="start_date" min="<%= Date.today %>" required>
     </div>
+
+    <div class="form-group mt-2">
+      <label for="bookingEndDate">End Date</label>
+      <input type="date" class="form-control" id="bookingEndDate" name="end_date" required>
+    </div>
+    <div class="form-group mt-2">
+
+      <button type="submit" class="btn btn-primary">Book Now</button>
+    </div>
+  <% end %>
+</div>
+
+  <script>
+  const startDateInput = document.querySelector("#bookingStartDate");
+  const endDateInput = document.querySelector("#bookingEndDate");
+
+  startDateInput.addEventListener("change", (event) => {
+    const startDate = event.target.value;
+    endDateInput.setAttribute("min", startDate);
+    if (endDateInput.value && endDateInput.value < startDate) {
+      endDateInput.value = "";
+    }
+  });
+  </script>
   </div>
 
   <!-- Submarine Description -->
