@@ -66,11 +66,13 @@
     </div>
   </div>
 
+<% if @submarine.user == current_user %>
   <div class="row mt-4">
     <div class="col-md-12">
       <%= link_to 'Destroy', submarine_path(@submarine), data: { turbo_confirm: 'Are you sure you want to delete this submarine?', turbo_method: :delete }, class: 'btn btn-danger' %>
     </div>
   </div>
+<% end %>
 
   <div class="row mt-4">
     <div class="col-md-12">

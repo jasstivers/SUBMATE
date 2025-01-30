@@ -57,8 +57,10 @@ class SubmarinesController < ApplicationController
 
     def destroy
       @submarine = Submarine.find(params[:id])
-      @submarine.destroy
-      redirect_to submarines_path, notice: 'Submarine destroyed'
+      if @submarine.user == current_user
+        @submarine.destroy
+        redirect_to submarines_path, notice: 'Submarine destroyed'
+      end
     end
 
     private
