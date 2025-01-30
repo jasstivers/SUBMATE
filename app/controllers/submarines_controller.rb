@@ -1,26 +1,25 @@
 class SubmarinesController < ApplicationController
   def index
     @submarines = Submarine.all
+    @categories = Submarine.distinct.pluck(:submarine_class)
 
-    if params[:price_ranges].present?
-      price_ranges = params[:price_ranges]
-      if price_ranges.include?('under_1m')
-        @submarines = @submarines.where('price < ?', 1_000_000)
-      end
-      if price_ranges.include?('1m_to_10m')
-        @submarines = @submarines.where(price: 1_000_000..10_000_000)
-      end
-      if price_ranges.include?('above_10m')
-        @submarines = @submarines.where('price > ?', 10_000_000)
-      end
+    if params[:price_range].present?
+      @submarines = @submarines.where('price <= ?', params[:price_range])
     end
 
-    if params[:categories].present?
+    if params[:categories].present? && params[:categories].any?
       @submarines = @submarines.where(submarine_class: params[:categories])
     end
 
     if params[:autonomies].present?
-      @submarines = @submarines.where(amenities: params[:autonomies])
+      selected_amenities = params[:autonomies]
+      selected_amenities.each do |amenity|
+        @submarines = @submarines.where('amenities ILIKE ?', "%#{amenity}%")
+      end
+    end
+
+    if params[:production_years].present?
+      @submarines = @submarines.where(prod_year: params[:production_years])
     end
 
     if params[:search].present?
@@ -37,13 +36,34 @@ class SubmarinesController < ApplicationController
         @submarines = @submarines.order(price: :desc)
       end
     end
-
-    if params[:depth].present?
-      @submarines = @submarines.where('amenities ILIKE ?', "%#{params[:depth]}%")
-    end
   end
 
-    def show
+  def show
     @submarine = Submarine.find(params[:id])
-  end
+    end
+
+    def new
+      @submarine = Submarine.new
+    end
+
+    def create
+      @submarine = current_user.submarines.new(submarine_params)
+      if @submarine.save
+        redirect_to submarines_path
+      else
+        render :new
+      end
+    end
+
+    def destroy
+      @submarine = Submarine.find(params[:id])
+      @submarine.destroy
+      redirect_to submarines_path, notice: 'Submarine destroyed'
+    end
+
+    private
+
+    def submarine_params
+      params.require(:submarine).permit(:name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :image_tag)
+    end
 end

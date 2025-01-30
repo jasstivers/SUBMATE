@@ -4,101 +4,77 @@
     <h3>Filter Submarines</h3>
 
     <%= form_with url: submarines_path, method: :get, local: true do %>
+      <!-- Search by Name (Placed at the top) -->
+      <div class="filter-group">
+        <h4>Search by Name</h4>
+        <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter submarine name' %>
+      </div>
+
       <!-- Price Ranges -->
       <div class="filter-group">
         <h4>Price Ranges</h4>
-        <ul>
-          <li>
-            <%= check_box_tag "price_ranges[]", "under_1m", params[:price_ranges]&.include?("under_1m") %>
-            Under $1M (0)
-          </li>
-          <li>
-            <%= check_box_tag "price_ranges[]", "1m_10m", params[:price_ranges]&.include?("1m_10m") %>
-            $1M - $10M (4)
-          </li>
-          <li>
-            <%= check_box_tag "price_ranges[]", "above_10m", params[:price_ranges]&.include?("above_10m") %>
-            Above $10M (0)
-          </li>
-        </ul>
+        <label for="price-slider" class="form-label">Select Price Range</label>
+        <input type="range" class="form-range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 10000000 %>" oninput="updatePriceValue(this)">
+        <!-- Display the selected price value next to the slider -->
+        <span id="price-value">$<%= params[:price_range] || '10000000' %></span>
       </div>
+
+      <script>
+        function updatePriceValue(slider) {
+          const priceValue = document.getElementById('price-value');
+          priceValue.textContent = `$${slider.value}`;
+
+          const hiddenField = document.getElementById('price-range-hidden');
+          hiddenField.value = slider.value;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const priceSlider = document.getElementById('price-slider');
+          updatePriceValue(priceSlider);  // Update price value on initial page load
+        });
+      </script>
 
       <!-- Categories -->
       <div class="filter-group">
         <h4>Categories</h4>
         <ul>
-          <li>
-            <%= check_box_tag "categories[]", "Research", params[:categories]&.include?("Research") %>
-            Research (1)
-          </li>
-          <li>
-            <%= check_box_tag "categories[]", "Explorer", params[:categories]&.include?("Explorer") %>
-            Explorer (1)
-          </li>
-          <li>
-            <%= check_box_tag "categories[]", "Scout", params[:categories]&.include?("Scout") %>
-            Scout (1)
-          </li>
-          <li>
-            <%= check_box_tag "categories[]", "Interceptor", params[:categories]&.include?("Interceptor") %>
-            Interceptor (1)
-          </li>
+          <% @categories.each do |category| %>
+            <li>
+              <%= check_box_tag "categories[]", category, params[:categories]&.include?(category) %>
+              <%= category %> (<%= Submarine.where(submarine_class: category).count %>)
+            </li>
+          <% end %>
         </ul>
       </div>
 
-      <!-- Operating Depth -->
+      <!-- Production Year -->
       <div class="filter-group">
-        <h4>Operating Depth</h4>
+        <h4>Production Year</h4>
         <ul>
-          <li>
-            <%= check_box_tag "depths[]", "100m", params[:depths]&.include?("100m") %>
-            100m (4)
-          </li>
-          <li>
-            <%= check_box_tag "depths[]", "30m", params[:depths]&.include?("30m") %>
-            30m (1)
-          </li>
+          <% years = (1000..2025).to_a.reverse %> <!-- Adjust range as needed -->
+          <% years.each do |year| %>
+            <% count = Submarine.where(prod_year: year).count %>
+            <% if count > 0 %>
+              <li>
+                <%= check_box_tag "production_years[]", year, params[:production_years]&.include?(year.to_s) %>
+                <%= year %> (<%= count %>)
+              </li>
+            <% end %>
+          <% end %>
         </ul>
       </div>
 
-      <!-- Occupancy -->
+      <!-- Amenities -->
       <div class="filter-group">
-        <h4>Occupancy</h4>
+        <h4>Amenities</h4>
         <ul>
-          <li>
-            <%= check_box_tag "occupancies[]", "10", params[:occupancies]&.include?("10") %>
-            10 Person (1)
-          </li>
-          <li>
-            <%= check_box_tag "occupancies[]", "16", params[:occupancies]&.include?("16") %>
-            16 Person (1)
-          </li>
-        </ul>
-      </div>
-
-      <!-- Cruising Speed -->
-      <div class="filter-group">
-        <h4>Cruising Speed</h4>
-        <ul>
-          <li>
-            <%= check_box_tag "speeds[]", "3", params[:speeds]&.include?("3") %>
-            3 Knots (7)
-          </li>
-        </ul>
-      </div>
-
-      <!-- Autonomy -->
-      <div class="filter-group">
-        <h4>Autonomy</h4>
-        <ul>
-          <li>
-            <%= check_box_tag "autonomies[]", "10h", params[:autonomies]&.include?("10h") %>
-            10 Hours (2)
-          </li>
-          <li>
-            <%= check_box_tag "autonomies[]", "7d", params[:autonomies]&.include?("7d") %>
-            7 Days (1)
-          </li>
+          <% amenities = Submarine.pluck(:amenities).flat_map { |amenity| amenity.split(', ') }.uniq %>
+          <% amenities.each do |amenity| %>
+            <li>
+              <%= check_box_tag "autonomies[]", amenity, params[:autonomies]&.include?(amenity) %>
+              <%= amenity %> (<%= Submarine.where('amenities LIKE ?', "%#{amenity}%").count %>)
+            </li>
+          <% end %>
         </ul>
       </div>
 
@@ -112,18 +88,26 @@
     <p class="page-description">Discover our fleet of submarines designed for exploration and adventure.</p>
 
     <div class="submarines-cards">
-      <% @submarines.each do |submarine| %>
-        <div class="submarine-card">
-          <div class="submarine-image">
-          <%= cl_image_tag submarine.photos.first.key, width: 300, height: 200, crop: :fill %>
+      <% if @submarines.any? %>
+        <% @submarines.each do |submarine| %>
+          <div class="submarine-card">
+            <div class="submarine-image">
+              <% if submarine.photos.attached? %>
+                <%= cl_image_tag(submarine.photos.first.key, width: 300, height: 200, crop: :fill) %>
+              <% else %>
+                <%= image_tag "logo.png", width: 300, height: 200 %>
+              <% end %>
+            </div>
+            <div class="submarine-details">
+              <h2 class="submarine-title"><%= submarine.name %></h2>
+              <p class="submarine-description"><%= submarine.description %></p>
+              <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
+              <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
+            </div>
           </div>
-          <div class="submarine-details">
-            <h2 class="submarine-title"><%= submarine.name %></h2>
-            <p class="submarine-description"><%= submarine.description %></p>
-            <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
-            <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
-          </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p class="no-results-message">No submarines found matching your criteria.</p>
       <% end %>
     </div>
   </div>

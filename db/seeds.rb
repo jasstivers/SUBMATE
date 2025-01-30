@@ -8,7 +8,8 @@ users = [
   { name: "Stamati", email: "stamati@example.com", password: "password123" },
   { name: "Jasmin", email: "jasmin@example.com", password: "password123" },
   { name: "Jakub", email: "jakub@example.com", password: "password123" },
-  { name: "Max", email: "max@example.com", password: "password123" }
+  { name: "Max", email: "max@example.com", password: "password123" },
+  { name: "Elon Musk", email: "elon@example.com", password: "password123" }
 ]
 
 users.each do |user_data|
@@ -27,8 +28,8 @@ submarines = [
     amenities: "Wifi, Mini-bar, Observation Deck",
     speed: 30,
     price: 5000000,
-    image_tag: "sea_thunder_2",
-    user_id: User.first.id # Assign user_id from the first user
+    image_tag: "nautilus",
+    user_id: User.last.id # Assign user_id from the first user
   },
   {
     name: "Deep Blue",
@@ -40,7 +41,7 @@ submarines = [
     speed: 25,
     price: 8000000,
     image_tag: "deep_blue",
-    user_id: User.second.id # Assign user_id from the second user
+    user_id: User.last.id # Assign user_id from the second user
   },
   {
     name: "Poseidon",
@@ -52,7 +53,7 @@ submarines = [
     speed: 40,
     price: 3000000,
     image_tag: "poseidon",
-    user_id: User.third.id # Assign user_id from the third user
+    user_id: User.last.id # Assign user_id from the third user
   },
   {
     name: "Titan",
@@ -74,7 +75,7 @@ submarines = [
     prod_year: 2025,
     amenities: "Radar, Torpedoes, Torpedoes, Torpedoes,...",
     speed: 10,
-    price: 900000000,
+    price: 99999,
     image_tag: "sea_thunder_2",
     user_id: User.last.id # Assign user_id from the last user
   },
@@ -84,10 +85,10 @@ submarines = [
     weight_ton: 2500,
     submarine_class: "Interceptor",
     prod_year: 2005,
-    amenities: "Radar, Torpedoes, Stealth Mode",
+    amenities: "Radar, Torpedoes, Stealth Mode, Duran Duran",
     speed: 60,
     price: 1500000,
-    image_tag: "scifi_sub",
+    image_tag: "seawolf",
     user_id: User.last.id # Assign user_id from the last user
   },
   {
@@ -115,23 +116,50 @@ submarines = [
     user_id: User.last.id # Assign user_id from the last user
   },
   {
-    name: "Qianliyan III",
-    description: "The pride of China!",
+    name: "Big Red",
+    description: "A big red sub with a patriotic and modern design!",
     weight_ton: 3000,
     submarine_class: "Interceptor",
     prod_year: 2022,
     amenities: "Radar, Torpedoes, Stealth Mode",
     speed: 45,
     price: 10000000,
-    image_tag: "Qianliyan_3",
+    image_tag: "big_red",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "The Rusty Venture",
+    description: "The exact details of our sub may be disputed, but we can at least guarentee you an interesting time.",
+    weight_ton: 3000,
+    submarine_class: "Research",
+    prod_year: 2003,
+    amenities: "Radar, Periscope, Snorkel, Brock Samson",
+    speed: 45,
+    price: 10000000,
+    image_tag: "rusty_venture",
+    user_id: User.last.id # Assign user_id from the last user
+  },
+  {
+    name: "The Valiant",
+    description: "A chic, futuristic sub to the people of with a retrofuturistic vibe. Uses dial-up for extra authenticity.",
+    weight_ton: 3000,
+    submarine_class: "Interceptor",
+    prod_year: 1985,
+    amenities: "Radar, Torpedoes, Stealth Mode",
+    speed: 45,
+    price: 10000000,
+    image_tag: "valiant",
     user_id: User.last.id # Assign user_id from the last user
   }
 ]
 
 submarines.each do |submarine_data|
   submarine = Submarine.create!(submarine_data)
-  photo = File.new(Rails.root.join("db/Seed Images/#{submarine_data[:image_tag]}.jpg"))
-  submarine.photos.attach(io: photo, filename:"#{submarine_data[:image_tag]}.jpg", content_type: "image/jpg")
+  photo_dir = Dir[Rails.root.join("db/Seed Images/#{submarine_data[:image_tag]}/*")]
+  photo_dir.each do |item|
+    photo = File.new(item)
+    submarine.photos.attach(io: photo, filename: File.basename(item), content_type: "image/#{File.extname(item).delete('.')}")
+  end
   submarine.save
   puts "Created submarine: #{submarine_data[:name]}"  # Confirm submarine creation
 end

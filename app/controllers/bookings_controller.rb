@@ -2,7 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @bookings = Booking.includes(:user, :submarine)
+    @bookings = Booking.includes(:user, :submarine).where(submarine: { user: current_user })
   end
 
   def new
@@ -18,7 +18,7 @@ class BookingsController < ApplicationController
     @booking.status = 'pending' # Set the booking status to pending
 
     if @booking.save
-      redirect_to submarine_path(@submarine), notice: "Booking is pending approval from the owner!"
+      redirect_to bookings_path, notice: "Booking is pending approval from the owner!"
     else
       render :new, status: :unprocessable_entity
     end
