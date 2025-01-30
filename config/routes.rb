@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :bookings, only: [:new, :create, :index], path: "bookings"  # Nested bookings with index action
   end
 
-  resources :bookings, only: :index
-
+  resources :bookings, only: [:index] do
+    member do
+      patch :confirm
+      patch :reject
+    end
+  end
 end
