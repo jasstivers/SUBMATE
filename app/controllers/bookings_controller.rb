@@ -2,7 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @bookings = Booking.includes(:user, :submarine)
+    @bookings = Booking.includes(:user, :submarine).where(submarine: { user: current_user })
   end
 
   def new
