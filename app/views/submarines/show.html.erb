@@ -1,50 +1,47 @@
 <div class="container mt-4">
   <div class="row">
-    <!-- Top-left area: Image -->
+    <!-- Top-left area: Image and name of sub -->
     <div class="col-md-6">
-      <img src="https://via.placeholder.com/1200x800" class="img-fluid" alt="<%= @submarine.name %> Image">
+      <h2><%= @submarine.name %></h2> <!-- Updated font size for the name -->
+      <% if @submarine.photos.attached? %>
+        <%= cl_image_tag(@submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
+      <% else %>
+        <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
+      <% end %>
     </div>
 
     <!-- Top-right area: Booking Form -->
     <div class="col-md-6">
-  <h4>Booking Form</h4>
-  <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
-    <div class="form-group">
-      <label for="bookingStartDate">Start Date</label>
-      <input type="date" class="form-control" id="bookingStartDate" name="start_date" min="<%= Date.today %>" required>
-    </div>
+      <h4>Booking Form</h4>
+      <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
+        <div class="form-group">
+          <label for="bookingStartDate">Start Date</label>
+          <input type="date" class="form-control" id="bookingStartDate" name="start_date" min="<%= Date.today %>" required>
+        </div>
 
-    <div class="form-group mt-2">
-      <label for="bookingEndDate">End Date</label>
-      <input type="date" class="form-control" id="bookingEndDate" name="end_date" required>
+        <div class="form-group mt-2">
+          <label for="bookingEndDate">End Date</label>
+          <input type="date" class="form-control" id="bookingEndDate" name="end_date" required>
+        </div>
+        <div class="form-group mt-2">
+          <button type="submit" class="btn btn-primary">Book Now</button>
+        </div>
+      <% end %>
     </div>
-    <div class="form-group mt-2">
-
-      <button type="submit" class="btn btn-primary">Book Now</button>
-    </div>
-  <% end %>
-</div>
+  </div>
 
   <script>
-  const startDateInput = document.querySelector("#bookingStartDate");
-  const endDateInput = document.querySelector("#bookingEndDate");
+    const startDateInput = document.querySelector("#bookingStartDate");
+    const endDateInput = document.querySelector("#bookingEndDate");
 
-  startDateInput.addEventListener("change", (event) => {
-    const startDate = event.target.value;
-    endDateInput.setAttribute("min", startDate);
-    if (endDateInput.value && endDateInput.value < startDate) {
-      endDateInput.value = "";
-    }
-  });
+    startDateInput.addEventListener("change", (event) => {
+      const startDate = event.target.value;
+      endDateInput.setAttribute("min", startDate);
+      if (endDateInput.value && endDateInput.value < startDate) {
+        endDateInput.value = "";
+      }
+    });
   </script>
-  </div>
-
-  <!-- Submarine Description -->
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <h2><%= @submarine.name %></h2>
-    </div>
-  </div>
 
   <!-- Quick Details -->
   <div class="row mt-4">
