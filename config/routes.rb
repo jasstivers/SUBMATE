@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'landing/index'
+
+  root to: "landing#index"
+
   devise_for :users
-  root to: "submarines#index"
 
   get "up" => "rails/health#show", as: :rails_health_check
 
