@@ -54,6 +54,12 @@ class SubmarinesController < ApplicationController
       end
     end
 
+    def destroy
+      @submarine = Submarine.find(params[:id])
+      @submarine.destroy
+      redirect_to submarines_path, notice: 'Submarine destroyed'
+    end
+
     private
 
     def submarine_params
