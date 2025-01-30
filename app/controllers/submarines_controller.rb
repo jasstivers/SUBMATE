@@ -1,12 +1,13 @@
 class SubmarinesController < ApplicationController
   def index
     @submarines = Submarine.all
+    @categories = Submarine.distinct.pluck(:submarine_class)
 
     if params[:price_range].present?
       @submarines = @submarines.where('price <= ?', params[:price_range])
     end
 
-    if params[:categories].present?
+    if params[:categories].present? && params[:categories].any?
       @submarines = @submarines.where(submarine_class: params[:categories])
     end
 
