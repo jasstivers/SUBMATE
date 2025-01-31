@@ -2,7 +2,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :submarine
 
-  enum status: { confirmed: 0, pending: 1, cancelled: 2 }
+  enum status: { confirmed: 0, pending: 1, rejected: 2 }
 
   # Validations
   validates :start_datetime, :end_date, presence: true
