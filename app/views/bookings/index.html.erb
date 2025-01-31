@@ -16,8 +16,14 @@
           <% @bookings.each do |booking| %>
             <div class="card shadow-sm">
               <div class="card-body">
-                <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Submarine Picture">
-                <h3 class="card-title mb-1">
+
+                <% if booking.submarine.photos.attached? %>
+                  <%= cl_image_tag(booking.submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
+                <% else %>
+                  <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
+                <% end %>
+
+                <h3 class="card-title mb-1 mt-3">
                   <%= booking.submarine.name %>
                 </h3>
                 <p class="card-text text-muted mb-0">
@@ -29,9 +35,15 @@
                 <p class="card-text text-muted mb-0">
                   <strong>end_date:</strong> <%= booking.end_date %>
                 </p>
-                <% if booking.status == "pending" %>
+                <!-- Show booking actions for the owner -->
+                <% if current_user == booking.submarine.user && booking.status == "pending" %>
                   <%= link_to 'Confirm', confirm_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-success' %>
                   <%= link_to 'Reject', reject_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-danger' %>
+                <% end %>
+
+                <!-- Display booking status for user -->
+                <% if booking.status == "confirmed" %>
+                <% elsif booking.status == "rejected" %>
                 <% end %>
               </div>
             </div>

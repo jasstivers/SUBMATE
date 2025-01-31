@@ -2,7 +2,7 @@
   <div class="row">
     <!-- Top-left area: Image and name of sub -->
     <div class="col-md-6">
-      <h2><%= @submarine.name %></h2> <!-- Updated font size for the name -->
+      <h2><%= @submarine.name %></h2>
       <% if @submarine.photos.attached? %>
         <%= cl_image_tag(@submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
       <% else %>

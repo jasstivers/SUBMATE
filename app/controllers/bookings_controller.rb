@@ -3,7 +3,9 @@ class BookingsController < ApplicationController
   before_action :set_booking, only: [:confirm, :reject]
 
   def index
-    @bookings = Booking.includes(:user, :submarine).where(submarine: { user: current_user })
+    # Use joins to ensure submarines table is included in the query
+    @bookings = Booking.joins(:submarine).includes(:user, :submarine)
+                       .where('submarines.user_id = ? OR bookings.user_id = ?', current_user.id, current_user.id)
   end
 
   def confirm
