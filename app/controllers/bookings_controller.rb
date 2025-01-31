@@ -20,7 +20,7 @@ class BookingsController < ApplicationController
 
   def new
     @submarine = Submarine.find(params[:submarine_id])
-    @booking = Booking.new
+    @booking = Booking.new(start_datetime: params[:start_date], end_date: params[:end_date])
   end
 
   def create
