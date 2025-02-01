@@ -66,6 +66,6 @@ class SubmarinesController < ApplicationController
     private
 
     def submarine_params
-      params.require(:submarine).permit(:name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :image_tag)
+      params.require(:submarine).permit(:name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :photos)
     end
 end
