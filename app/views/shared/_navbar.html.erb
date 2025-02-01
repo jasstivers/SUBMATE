@@ -1,45 +1,48 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "sublogo.png" %>
-    <% end %>
+<div class="custom-navbar">
+  <!-- Top Navbar Links -->
+  <div class="top-nav">
+    <!-- Left Section (Menu, Our Fleet) -->
+    <div class="left-items">
+      <%= link_to "Menu", "#", class: "nav-link" %>
+      <%= link_to "Our Fleet", "/submarines", class: "nav-link" %>
+    </div>
 
-    <% if current_user %>
-      <h1 class="welcome"> Welcome, <%= current_user.name %></h1>
-    <% else %>
-      <h1 class="welcome"> Welcome to SUBMATE </h1>
-    <% end %>
+    <!-- Centered Logo and Text -->
+    <div class="logo-container">
+      <%= link_to root_path, class: "navbar-brand" do %>
+        <%= image_tag "sublogo.png", class: "nav-logo" %>
+      <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <p class="explore-text fw-bold">Explore our submarines</p>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-        <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+    <!-- Right Section (Rent a Sub, Contact, Profile) -->
+    <div class="right-items">
+      <%= link_to "Rent a Sub", "/submarines", class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+      <!-- User Dropdown -->
+      <% if user_signed_in? %>
+        <div class="dropdown">
+          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown">
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar" %>
           </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Profile", "#", class: "dropdown-item" %>
-              <%= link_to "My bookings", bookings_path, class: "dropdown-item" %>
-              <%= link_to "New submarine", new_submarine_path, class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-          </li>
-        <% end %>
-      </ul>
+          <!-- Display user name under user pic if logged in -->
+          <% if user_signed_in? %>
+            <span class="user-name"><%= current_user.name %></span>
+          <% end %>
+          <div class="dropdown-menu">
+            <%= link_to "Profile", "#", class: "dropdown-item" %>
+            <%= link_to "My bookings", bookings_path, class: "dropdown-item" %>
+            <%= link_to "New submarine", new_submarine_path, class: "dropdown-item" %>
+            <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+          </div>
+        </div>
+      <% else %>
+        <div class="nav-item">
+          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

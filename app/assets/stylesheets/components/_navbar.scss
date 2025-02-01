@@ -1,12 +1,120 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.custom-navbar {
+  background: linear-gradient(to bottom, #002f4b, #001a33);
+  border: 5px solid white;
+  border-radius: 15px;
+  padding: 0;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;  /* Horizontally center the navbar content */
+  align-items: center;      /* Vertically center the content */
+  height: 120px;            /* Set the height of the navbar */
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.top-nav {
+  display: flex;
+  justify-content: space-between;  /* Space out the left and right sections */
+  align-items: center;             /* Vertically center the content inside .top-nav */
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.nav-links,
+.user-links {
+  display: flex;
+  gap: 20px;  /* Adjust the gap between navbar items */
+}
+
+.nav-link {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.avatar {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  background-color: #002f4b; /* Match navbar color */
+  border-radius: 10px;
+  color: white;  /* Ensure text color is white */
+  border: 2px solid white;
+}
+
+/* Style for the dropdown menu items */
+.dropdown-item {
+  color: white;  /* Set text color to white */
+}
+
+.dropdown-item:hover {
+  background-color: #004b6b; /* Optional: change background on hover */
+  color: white;  /* Ensure text remains white on hover */
+}
+
+/* Container for the logo and "Explore our submarines" */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;           /* Horizontally center the content */
+  justify-content: center;       /* Vertically center the content */
+  position: absolute;            /* Position the logo container within the navbar */
+  left: 50%;                     /* Position it at the center horizontally */
+  transform: translateX(-50%);   /* Center the logo container by shifting it by 50% */
+}
+
+.nav-logo {
+  width: 150px;
+}
+
+.explore-text {
+  color: white;
+  font-size: 16px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* For the left and right sections of the navbar */
+.right-items {
+  display: flex;
+  justify-content: space-evenly;  /* Distribute space evenly between items */
+  width: 100%;                   /* Allow the sections to take up full width */
+  align-items: center;           /* Vertically align the items */
+}
+
+.left-items {
+  display: flex;
+  justify-content: space-evenly;  /* Distribute space evenly between items */
+  width: 100%;                   /* Allow the sections to take up full width */
+  align-items: center;           /* Vertically align the items */
+}
+
+/* Additional adjustments for better spacing if needed */
+.left-items {
+  margin-right: 50px;  /* Adjust space between left section and logo */
+}
+
+.right-items {
+  margin-left: 50px;   /* Adjust space between right section and logo */
+}
+
+.page-description {
+  color: white;        /* Makes the text white */
+  font-size: 30px !important; /* Forces the font size to 50px */
+}
+
+.user-name {
+  color: white;
 }
