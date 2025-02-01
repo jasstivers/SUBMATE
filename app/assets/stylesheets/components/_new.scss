@@ -1,0 +1,21 @@
+/* Background for the entire page */
+.booking-page {
+  min-height: 100vh; /* Full viewport height */
+  background: linear-gradient(to bottom, #002f4b, #001a33);
+  padding: 40px 0;
+}
+
+/* Style text to be readable on the background */
+.text-white {
+  color: #ffffff;
+}
+
+/* Form and price sections should have a light background */
+.bg-light {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Ensure price details stand out */
+.bg-white {
+  background-color: #ffffff;
+}
