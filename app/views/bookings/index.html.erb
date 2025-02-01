@@ -23,10 +23,10 @@
                       <strong>Status:</strong> <%= booking.status %>
                     </p>
                     <p class="card-text text-muted mb-0">
-                      <strong>start_datetime:</strong> <%= booking.start_datetime %>
+                      <strong>Start Date:</strong> <%= booking.start_datetime %>
                     </p>
                     <p class="card-text text-muted mb-0">
-                      <strong>end_date:</strong> <%= booking.end_date %>
+                      <strong>End Date:</strong> <%= booking.end_date %>
                     </p>
                     <!-- Show booking actions for the owner -->
                     <% if current_user == booking.submarine.user && booking.status == "pending" %>
