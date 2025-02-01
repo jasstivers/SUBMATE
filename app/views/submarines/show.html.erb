@@ -1,10 +1,11 @@
+<div class="submarines-container">
 <div class="container mt-4">
   <div class="row">
     <!-- Top-left area: Image and name of sub -->
     <div class="col-md-6">
-      <h2><%= @submarine.name %></h2>
+      <h2 class="text-color"><%= @submarine.name %></h2>
       <% if @submarine.photos.attached? %>
-        <%= cl_image_tag(@submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
+        <%= cl_image_tag(@submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 shadow-sm picture-card") %>
       <% else %>
         <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
       <% end %>
@@ -12,19 +13,19 @@
 
     <!-- Top-right area: Booking Form -->
     <div class="col-md-6">
-      <h4>Booking Form</h4>
+      <h2 class="text-color">Booking Form</h2>
       <%= form_with(url: new_submarine_booking_path(@submarine), method: :get) do %>
         <div class="form-group">
-          <label for="bookingStartDate">Start Date</label>
-          <input type="date" class="form-control" id="bookingStartDate" name="start_date" min="<%= Date.today %>" required>
+          <label for="bookingStartDate" class="text-color">Start Date</label>
+          <input type="date" class="form-control input-card" id="bookingStartDate" name="start_date" min="<%= Date.today %>" required>
         </div>
 
         <div class="form-group mt-2">
-          <label for="bookingEndDate">End Date</label>
-          <input type="date" class="form-control" id="bookingEndDate" name="end_date" required>
+          <label for="bookingEndDate" class="text-color">End Date</label>
+          <input type="date" class="form-control input-card" id="bookingEndDate" name="end_date" required>
         </div>
         <div class="form-group mt-2">
-          <button type="submit" class="btn btn-primary">Book Now</button>
+          <button type="submit" class="btn btn-primary book-btn">Book Now</button>
         </div>
       <% end %>
     </div>
@@ -46,17 +47,39 @@
   <!-- Quick Details -->
   <div class="row mt-4">
     <div class="col-md-12">
-      <div class="card shadow">
+      <h4 class="text-color">Quick Details</h4>
+      <div class="card shadow details-card">
         <div class="card-body">
-          <h5>Quick Details</h5>
+          <%# <strong><h4>Quick Details</h4></strong> %>
           <ul>
-            <li><strong>Description:</strong> <%= @submarine.description %></li>
-            <li><strong>Weight:</strong> <%= @submarine.weight_ton %> tons</li>
-            <li><strong>Class:</strong> <%= @submarine.submarine_class %></li>
-            <li><strong>Production Year:</strong> <%= @submarine.prod_year %></li>
-            <li><strong>Amenities:</strong> <%= @submarine.amenities %></li>
-            <li><strong>Speed:</strong> <%= @submarine.speed %> knots</li>
-            <li><strong>Price:</strong> $<%= @submarine.price %></li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Description:</strong></h6>
+              <span><%= @submarine.description %></span>
+            </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Weight:</strong></h6>
+               <span><%= @submarine.weight_ton %> tons</span>
+            </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Class:</strong></h6>
+              <span><%= @submarine.submarine_class %></span>
+              </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Production Year:</strong></h6>
+              <span><%= @submarine.prod_year %></span>
+              </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Amenities:</strong></h6>
+              <span><%= @submarine.amenities %></span>
+              </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Speed:</strong></h6>
+              <span><%= @submarine.speed %> knots</span>
+            </li>
+            <li>
+              <h6 class="submarine-title" style="display: inline;"><strong>Price:</strong> $</h6>
+              <span><%= @submarine.price %></span>
+            </li>
           </ul>
         </div>
       </div>
@@ -73,7 +96,8 @@
 
   <div class="row mt-4">
     <div class="col-md-12">
-      <a href="/submarines" class="btn btn-secondary">Back</a>
+      <a href="/submarines" class="btn btn-secondary back-btn">Back</a>
     </div>
   </div>
+</div>
 </div>
