@@ -6,6 +6,12 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <style>
+    body {
+      cursor: url('<%= asset_path('submarine.png') %>') 16 16, auto;
+    }
+    </style>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
