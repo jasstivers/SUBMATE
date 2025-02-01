@@ -3,5 +3,5 @@ class Submarine < ApplicationRecord
 
   has_many_attached :photos
 
-  validates :name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :image_tag, presence: true
+  validates :name, :price, :submarine_class, :amenities, :description, :weight_ton, :prod_year, :speed, :photos, presence: true
 end
