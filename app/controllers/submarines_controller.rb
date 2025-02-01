@@ -1,12 +1,13 @@
 class SubmarinesController < ApplicationController
   def index
     @submarines = Submarine.all
+    @categories = Submarine.distinct.pluck(:submarine_class)
 
-    if params[:price_range].present?
-      @submarines = @submarines.where('price <= ?', params[:price_range])
+    if params[:price_min].present? && params[:price_max].present?
+      @submarines = @submarines.where('price >= ? AND price <= ?', params[:price_min], params[:price_max])
     end
 
-    if params[:categories].present?
+    if params[:categories].present? && params[:categories].any?
       @submarines = @submarines.where(submarine_class: params[:categories])
     end
 
@@ -51,6 +52,14 @@ class SubmarinesController < ApplicationController
         redirect_to submarines_path
       else
         render :new
+      end
+    end
+
+    def destroy
+      @submarine = Submarine.find(params[:id])
+      if @submarine.user == current_user
+        @submarine.destroy
+        redirect_to submarines_path, notice: 'Submarine destroyed'
       end
     end
 

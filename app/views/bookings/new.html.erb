@@ -1,51 +1,94 @@
 <div class="container mt-5">
-  <h1>Book Submarine: <%= @submarine.name %></h1>
+  <h1 class="my-4 fw-bold">Request to book</h1>
 
-  <%= form_with(model: [@submarine, @booking], url: submarine_bookings_path(@submarine), local: true) do |form| %>
-    <!-- Name -->
-    <div class="mb-3">
-      <%= form.label :name, class: 'form-label' %>
-      <%= form.text_field :name, class: 'form-control' %>
+  <div class="row">
+    <!-- Left Side: Form and Trip Details -->
+    <div class="col-md-6">
+      <div class="p-4 border rounded">
+        <h4 class="my-4 fw-bold">Your trip</h4>
+
+        <h5 class="fw-bold">Dates</h5>
+
+        <div class="p-3 border rounded w-70">
+          <p class="mb-0 fs-5">
+            <%= @booking.start_datetime.present? ? l(@booking.start_datetime, format: :long) : "Not selected" %>
+            –
+            <%= @booking.end_date.present? ? l(@booking.end_date, format: :long) : "Not selected" %>
+          </p>
+        </div>
+
+        <%= form_with(model: [@submarine, @booking], url: submarine_bookings_path(@submarine), local: true) do |form| %>
+
+          <!-- Hidden Fields for Dates -->
+          <%= form.hidden_field :start_datetime, value: @booking.start_datetime %>
+          <%= form.hidden_field :end_date, value: @booking.end_date %>
+
+          <!-- Payment Method -->
+          <h5 class="fw-bold mt-4">Payment Method</h5>
+          <div class="w-70">
+            <%= form.select :payment_method, ['Credit Card', 'PayPal', 'Bank Transfer'], {}, class: 'form-select' %>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-3">
+            <%= form.submit 'Book Submarine', class: 'btn btn-primary' %>
+          </div>
+
+        <% end %>
+      </div>
     </div>
 
-    <!-- Address -->
-    <div class="mb-3">
-      <%= form.label :address, class: 'form-label' %>
-      <%= form.text_area :address, class: 'form-control' %>
+    <!-- Right Side: Image and Price Details -->
+    <div class="col-md-5">
+      <div class="d-flex flex-column align-items-start p-4 border rounded" style="height: 100%;">
+
+        <!-- Submarine Name and Image Display Section -->
+        <div class="d-flex justify-content-between align-items-center mb-4 w-100">
+
+          <!-- Image -->
+          <div class="d-flex justify-content-center">
+            <% if @submarine.photos.attached? %>
+              <%= cl_image_tag(@submarine.photos.first.key, width: 250, height: 150, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
+            <% else %>
+              <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
+            <% end %>
+          </div>
+
+          <!-- Submarine Name to the right of the image -->
+          <div class="ms-3">
+            <h4 class="fw-bold mb-1 fs-5"><%= @submarine.name %></h4>
+            <p class="fs-6 text-muted mb-0"><%= @submarine.description %></p>
+          </div>
+
+        </div>
+
+        <!-- Price Details Section -->
+        <div class="d-flex flex-column w-100">
+          <h5 class="fw-bold">Price Details</h5>
+          <div class="p-3 border rounded mb-4">
+            <% start_date = @booking.start_datetime.to_date %>
+            <% end_date = @booking.end_date.to_date %>
+
+            <% days = (end_date - start_date).to_i %>
+            <% price = days * @submarine.price %>
+            <p class="mb-0 fs-5">Price for <%= days %> days: $<%= price.round(2) %></p>
+          </div>
+
+          <h5 class="fw-bold mt-4">Submate Service Fee</h5>
+          <div class="p-3 border rounded mb-4">
+            <% service_fee = price * 0.03 %>
+            <p class="mb-0 fs-5"> $<%= service_fee.round(2) %></p>
+          </div>
+
+          <h5 class="fw-bold mt-4">Total</h5>
+          <div class="p-3 border rounded">
+            <% total = price + service_fee %>
+            <p class="mb-0 fs-5">Total: $<%= total.round(2) %></p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Email Address -->
-    <div class="mb-3">
-      <%= form.label :email, class: 'form-label' %>
-      <%= form.email_field :email, class: 'form-control' %>
-    </div>
-
-    <!-- Payment Method -->
-    <div class="mb-3">
-      <%= form.label :payment_method, class: 'form-label' %>
-      <%= form.select :payment_method, ['Credit Card', 'PayPal', 'Bank Transfer'], {}, class: 'form-select' %>
-    </div>
-
-    <!-- Birthdate -->
-    <div class="mb-3">
-      <%= form.label :birthdate, class: 'form-label' %>
-      <%= form.date_select :birthdate, class: 'form-control' %>
-    </div>
-
-    <!-- Book From and Book Until -->
-    <div class="mb-3">
-      <%= form.label :start_datetime, "Book From", class: 'form-label' %>
-      <%= form.datetime_select :start_datetime, class: 'form-control' %>
-    </div>
-
-    <div class="mb-3">
-      <%= form.label :end_date, "Book Until", class: 'form-label' %>
-      <%= form.datetime_select :end_date, class: 'form-control' %>
-    </div>
-
-    <!-- Submit Button -->
-    <div>
-      <%= form.submit 'Book Submarine', class: 'btn btn-primary' %>
-    </div>
-  <% end %>
+  </div>
 </div>

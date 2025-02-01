@@ -1,0 +1,162 @@
+/* Landing page styles */
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.landing-page .hero {
+  background: linear-gradient(to bottom, rgba(0, 31, 61, 0.6), rgba(0, 31, 61, 0.3)),
+              url('homepage.png') no-repeat center center;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 50px;
+}
+
+.landing-page .welcome {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff;
+  margin-top: 6vh;
+}
+
+.landing-page .video-section {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-page .adventure-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 30px;
+}
+
+.landing-page .adventure-section h2 {
+  font-size: 2.0rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.landing-page .adventure-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-page .cta-button {
+  background-color: #005f6b;
+  color: #ffffff;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-block;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.landing-page .cta-button:hover {
+  background-color: #ffffff;
+  color: #005f6b;
+  border-color: #003f47;
+  transform: scale(1.1);
+}
+
+.landing-page .cta-button:active {
+  background-color: #003f47;
+  color: #ffffff;
+  transform: scale(1);
+  border-color: #003f47;
+}
+
+.landing-page .footer {
+  background-color: #00152f;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 0.8rem;
+  height: 100px;
+  box-sizing: border-box;
+}
+
+.landing-page .footer .social-links {
+  margin-bottom: 10px;
+}
+
+.landing-page .footer .social-icon {
+  margin: 0 15px;
+  font-size: 30px;
+  color: white;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.landing-page .footer .social-icon:hover {
+  transform: scale(1.1);
+  color: #005f6b;
+}
+
+.landing-page .footer p {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.landing-page .footer .social-icon i {
+  display: block;
+}
+
+.sublogo {
+  width: 550px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .landing-page .hero {
+    padding: 30px;
+  }
+
+  .landing-page .welcome {
+    font-size: 2.5rem;
+    margin-top: 5vh;
+  }
+
+  .landing-page .adventure-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .landing-page .adventure-section p {
+    font-size: 0.9rem;
+  }
+
+  .landing-page .cta-button {
+    font-size: 1rem;
+    padding: 12px 30px;
+  }
+
+  .landing-page .footer {
+    height: auto;
+    padding: 10px 15px;
+  }
+}
