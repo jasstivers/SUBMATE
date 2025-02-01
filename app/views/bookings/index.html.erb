@@ -1,46 +1,58 @@
-<div class="bookings-container">
-  <div class="container-fluid">
-    <div class="row d-flex">
-      <!-- Booking Cards -->
-      <div class="col-md-9 p-4" style="flex: 1 1 auto;">
-        <div class="d-flex flex-column gap-3">
-          <% if @bookings.empty? %>
-            <p>No bookings found</p>
-          <% else %>
-            <% @bookings.each do |booking| %>
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <% if booking.submarine.photos.attached? %>
-                    <%= cl_image_tag(booking.submarine.photos.first.key, width: 450, height: 300, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
-                  <% else %>
-                    <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
-                  <% end %>
+<div class="container-fluid">
+  <div class="row d-flex">
+    <!-- Sidebar -->
+    <div class="col-md-3" style="background-color: #d6d8f0; flex: 0 1 auto;">
+      <div class="p-4">
+        <div class="circle bg-secondary mb-4" style="width: 100px; height: 100px; border-radius: 50%;"></div>
+      </div>
+    </div>
 
-                  <h3 class="card-title mb-1 mt-3">
-                    <%= booking.submarine.name %>
-                  </h3>
-                  <p class="card-text text-muted mb-0">
-                    <strong>Status:</strong> <%= booking.status %>
-                  </p>
-                  <p class="card-text text-muted mb-0">
-                    <strong>Start Date:</strong> <%= booking.start_datetime %>
-                  </p>
-                  <p class="card-text text-muted mb-0">
-                    <strong>End Date:</strong> <%= booking.end_date %>
-                  </p>
+    <!-- Booking Cards -->
+    <div class="col-md-9 p-4" style="flex: 1 1 auto;">
+      <div class="d-flex flex-column gap-3">
+        <% if @bookings.empty? %>
+          <p>No bookings found</p>
+        <% else %>
+          <% @bookings.each do |booking| %>
+            <div class="card shadow-sm">
+              <div class="card-body">
 
-                  <% if current_user == booking.submarine.user && booking.status == "pending" %>
-                    <%= link_to 'Confirm', confirm_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-success' %>
-                    <%= link_to 'Reject', reject_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-danger' %>
-                  <% end %>
-                </div>
+                <% if booking.submarine.photos.attached? %>
+                  <%= cl_image_tag(booking.submarine.photos.first.key, width: 350, height: 250, crop: :fill, class: "rounded-5 border border-light shadow-sm") %>
+                <% else %>
+                  <%= image_tag "logo.png", width: 250, height: 150, class: "rounded-5 border border-light shadow-sm" %>
+                <% end %>
+
+                <h3 class="card-title mb-1 mt-3">
+                  <%= booking.submarine.name %>
+                </h3>
+                <p class="card-text text-muted mb-0">
+                  <strong>Status:</strong> <%= booking.status %>
+                </p>
+                <p class="card-text text-muted mb-0">
+                  <strong>start_datetime:</strong> <%= booking.start_datetime %>
+                </p>
+                <p class="card-text text-muted mb-0">
+                  <strong>end_date:</strong> <%= booking.end_date %>
+                </p>
+                <!-- Show booking actions for the owner -->
+                <% if current_user == booking.submarine.user && booking.status == "pending" %>
+                  <%= link_to 'Confirm', confirm_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-success' %>
+                  <%= link_to 'Reject', reject_booking_path(booking), data: { turbo_method: :patch }, class: 'btn btn-danger' %>
+                <% end %>
+
+                <!-- Display booking status for user -->
+                <% if booking.status == "confirmed" %>
+                <% elsif booking.status == "rejected" %>
+                <% end %>
               </div>
-            <% end %>
+            </div>
           <% end %>
+        <% end %>
 
-          <div class="mt-4">
-            <%= link_to "Back Home", submarines_path, class: "btn btn-primary" %>
-          </div>
+        <!-- Back Link -->
+        <div class="mt-4">
+          <%= link_to "Back Home", submarines_path, class: "btn btn-primary" %>
         </div>
       </div>
     </div>
