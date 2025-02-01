@@ -3,8 +3,8 @@ class SubmarinesController < ApplicationController
     @submarines = Submarine.all
     @categories = Submarine.distinct.pluck(:submarine_class)
 
-    if params[:price_range].present?
-      @submarines = @submarines.where('price <= ?', params[:price_range])
+    if params[:price_min].present? && params[:price_max].present?
+      @submarines = @submarines.where('price >= ? AND price <= ?', params[:price_min], params[:price_max])
     end
 
     if params[:categories].present? && params[:categories].any?

@@ -3,36 +3,65 @@
   <aside class="filter-box">
     <h3>Filter Submarines</h3>
 
-    <%= form_with url: submarines_path, method: :get, local: true do %>
-      <!-- Search by Name (Placed at the top) -->
-      <div class="filter-group">
-        <h4>Search by Name</h4>
-        <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter submarine name' %>
-      </div>
+<%= form_with url: submarines_path, method: :get do |form| %>
+  <!-- Search by Name (Placed at the top) -->
+  <div class="filter-group">
+    <h4>Search by Name</h4>
+    <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter submarine name' %>
+  </div>
 
-      <!-- Price Ranges -->
-      <div class="filter-group">
-        <h4>Price Ranges</h4>
-        <label for="price-slider" class="form-label">Select Price Range</label>
-        <input type="range" class="form-range" id="price-slider" name="price_range" min="0" max="10000000" step="100000" value="<%= params[:price_range] || 10000000 %>" oninput="updatePriceValue(this)">
-        <!-- Display the selected price value next to the slider -->
-        <span id="price-value">$<%= params[:price_range] || '10000000' %></span>
-      </div>
+  <!-- Price Ranges -->
+  <div class="filter-group">
+    <h4>Price Ranges</h4>
+    <label for="price-slider" class="form-label">Select Price Range</label>
+    <div id="price-slider"></div>
+    <span id="price-values">
+      <span id="price-min-value">$<%= number_with_delimiter(params[:price_min] || 0) %></span> -
+      <span id="price-max-value">$<%= number_with_delimiter(params[:price_max] || 1000000) %></span>
+    </span>
 
-      <script>
-        function updatePriceValue(slider) {
-          const priceValue = document.getElementById('price-value');
-          priceValue.textContent = `$${slider.value}`;
+    <%= hidden_field_tag :price_min, params[:price_min] || 0, id: "price-min-hidden" %>
+    <%= hidden_field_tag :price_max, params[:price_max] || 1000000, id: "price-max-hidden" %>
+  </div>
 
-          const hiddenField = document.getElementById('price-range-hidden');
-          hiddenField.value = slider.value;
-        }
+<script>
+  function initializePriceSlider() {
+    const priceSlider = document.getElementById('price-slider');
+    if (!priceSlider || priceSlider.noUiSlider) return;
 
-        document.addEventListener('DOMContentLoaded', function() {
-          const priceSlider = document.getElementById('price-slider');
-          updatePriceValue(priceSlider);  // Update price value on initial page load
-        });
-      </script>
+    const priceMinValue = document.getElementById('price-min-value');
+    const priceMaxValue = document.getElementById('price-max-value');
+    const priceMinHidden = document.getElementById('price-min-hidden');
+    const priceMaxHidden = document.getElementById('price-max-hidden');
+
+    let minPrice = parseInt(priceMinHidden.value) || 0;
+    let maxPrice = parseInt(priceMaxHidden.value) || 1000000;
+
+    noUiSlider.create(priceSlider, {
+      start: [minPrice, maxPrice],
+      connect: true,
+      range: {
+        'min': 0,
+        'max': 1000000
+      },
+      step: 1000
+    });
+
+    priceSlider.noUiSlider.on('update', function(values, handle) {
+      const minValue = Math.round(values[0]);
+      const maxValue = Math.round(values[1]);
+
+      priceMinValue.textContent = `$${new Intl.NumberFormat().format(minValue)}`;
+      priceMaxValue.textContent = `$${new Intl.NumberFormat().format(maxValue)}`;
+
+      priceMinHidden.value = minValue;
+      priceMaxHidden.value = maxValue;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initializePriceSlider);
+  document.addEventListener('turbo:load', initializePriceSlider);
+</script>
 
       <!-- Categories -->
       <div class="filter-group">
@@ -101,7 +130,12 @@
             <div class="submarine-details">
               <h2 class="submarine-title"><%= submarine.name %></h2>
               <p class="submarine-description"><%= submarine.description %></p>
-              <p class="submarine-capacity"><%= "Weight: #{submarine.weight_ton} tons" %></p>
+
+              <% ratings = { "Nautilus" => 5, "The Valiant" => 4, "Titan" => 0 } %>
+              <% rating = ratings[submarine.name] || 2 %>
+
+              <div class="rating" data-rating="<%= rating %>"></div>
+
               <%= link_to "View Details", submarine_path(submarine), class: "btn btn-primary" %>
             </div>
           </div>
