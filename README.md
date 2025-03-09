@@ -14,7 +14,6 @@ SUBMATE is a team collaboration project inspired by Airbnb, designed to simulate
 - PostgreSQL  
 - Devise for authentication  
 - Cloudinary for image hosting  
-- Stimulus for frontend interactivity  
 
 ## Team Collaboration  
 SUBMATE is developed by a team of contributors, each responsible for different aspects of the project, including backend development, frontend interactivity, and database design. Version control is managed through Git, with code reviews and discussions to optimize project structure and functionality.  
